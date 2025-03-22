@@ -1,0 +1,54 @@
+<main>
+  <div class="container">
+    <div class="register-form">
+      <div class="health-icon">
+        <i>⚕️</i>
+      </div>
+      <h2>Crear Cuenta</h2>
+      <p class="subtitle">Únete a nuestra comunidad de salud</p>
+      <form [formGroup]="formGroup">
+        <div class="input-row">
+          <div class="input-group">
+            <input type="text"
+            formControlName="nombre"/>
+            <label>Nombre</label>
+          </div>
+          <div class="input-group">
+            <input type="text" formControlName="apellido" />
+            <label>Apellido</label>
+          </div>
+        </div>
+        <div class="input-group">
+          <input type="email" formControlName="correo" />
+          <label>Correo electrónico</label>
+        </div>
+        <div class="input-group">
+          <input type="text" formControlName="documento"/>
+          <label>Documento</label>
+        </div>
+        <div class="input-group">
+          <input type="password" formControlName="pass" />
+          <label>Contraseña</label>
+        </div>
+        <div class="input-group">
+          <select formControlName="tipoUsuario">
+            <option value="paciente">Paciente</option>
+            <option value="profesional">Profesional de salud</option>
+          </select>
+          <label>Tipo de usuario</label>
+        </div>
+        <div class="terms">
+          <input type="checkbox" id="terms" required />
+          <label for="terms"
+            >Acepto los <a href="#">Términos y Condiciones</a> y la
+            <a href="#">Política de Privacidad</a></label
+          >
+        </div>
+        <button type="submit" (click)="clickRegister()">Registrarme</button>
+        <div class="login-link">
+          <p>¿Ya tienes una cuenta? <a [routerLink]="'../login'" >Iniciar sesión</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>

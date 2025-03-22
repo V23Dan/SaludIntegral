@@ -1,0 +1,201 @@
+/* Variables globales de color */
+:root {
+  --primary-color: #00c6b8;
+  --secondary-color: #1e3a8a;
+  --bg-color: #f0f9ff;
+  --text-color: #334155;
+  --shadow: 0 10px 30px rgba(0, 198, 184, 0.1);
+}
+
+/* Estilo global para el host del componente */
+app-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--bg-color), #ffffff);
+}
+
+/* Estilos del contenedor principal */
+.container {
+  width: 420px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* Efecto animado de borde */
+.container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  background: linear-gradient(0deg, transparent, var(--primary-color), var(--primary-color));
+  transform-origin: bottom right;
+  animation: animate 6s linear infinite;
+  z-index: -1;
+}
+
+.container::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 380px;
+  height: 420px;
+  background: linear-gradient(0deg, transparent, var(--primary-color), var(--primary-color));
+  transform-origin: bottom right;
+  animation: animate 6s linear infinite;
+  animation-delay: -3s;
+  z-index: -1;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Formulario de login */
+.login-form {
+  position: relative;
+  background: white;
+  border-radius: 20px;
+  inset: 2px;
+  z-index: 10;
+  padding: 40px;
+}
+
+/* Título */
+h2 {
+  color: var(--secondary-color);
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* Grupos de inputs */
+.input-group {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 15px 15px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-color);
+  font-size: 16px;
+  border-bottom: 2px solid #ccc;
+  transition: all 0.3s ease;
+}
+
+.input-group label {
+  position: absolute;
+  left: 15px;
+  top: 15px;
+  color: #8d8d8d;
+  font-size: 16px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.input-group input:focus ~ label,
+.input-group input:valid ~ label,
+.input-group label.focused {
+  top: -10px;
+  left: 0;
+  color: var(--primary-color);
+  font-size: 14px;
+}
+
+.input-group input:focus,
+.input-group input:valid {
+  border-bottom: 2px solid var(--primary-color);
+}
+
+/* Mensajes de error */
+.error-message {
+  color: #ff3860;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Link de contraseña olvidada */
+.forgot-password {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 25px;
+}
+
+.forgot-password a {
+  color: var(--text-color);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.forgot-password a:hover {
+  color: var(--primary-color);
+}
+
+/* Botón de submit */
+button {
+  width: 100%;
+  padding: 15px 0;
+  background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(0, 198, 184, 0.4);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 198, 184, 0.6);
+}
+
+/* Link de registro */
+.register-link {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.register-link p {
+  color: var(--text-color);
+  font-size: 15px;
+}
+
+.register-link a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+.health-icon {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 40px;
+  color: var(--primary-color);
+}

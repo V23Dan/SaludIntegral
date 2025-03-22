@@ -1,0 +1,30 @@
+/* Variables globales de color */
+:root {
+    --primary-color: #00c6b8;
+    --secondary-color: #1e3a8a;
+    --bg-color: #f0f9ff;
+    --text-color: #334155;
+    --shadow: 0 10px 30px rgba(0, 198, 184, 0.1);
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Estilos específicos para el contenedor auth */
+  .auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--bg-color), #ffffff);
+  }
