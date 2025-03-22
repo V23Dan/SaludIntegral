@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
-    path: "auth",
+    path: 'auth',
     loadComponent: () => import('./auth/auth.component'),
     children: [
       {
@@ -19,12 +19,25 @@ export const routes: Routes = [
     ],
   },
   {
-    path: "dashboard",
+    path: 'dashboard',
     loadComponent: () => import('./dashboard/dashboard.component'),
+    children: [
+      {
+        path: 'home',
+        title: 'Home',
+        loadComponent: () => import('./pages/home/home.component'),
+      },
+      {
+        path: 'homeAuth',
+        title: 'HomeAuth',
+        canActivate:[authGuard],
+        loadComponent: () => import('./pages/homeAuth/homeAuth.component'),
+      },
+    ],
   },
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'dashboard/home',
     pathMatch: 'full',
   },
 ];

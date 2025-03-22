@@ -1,21 +1,43 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-nav',
-  imports: [CommonModule],
+  imports: [RouterModule, CommonModule],
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.Component.css'],
+  styleUrl: './nav.component.css',
 })
 export default class NavComponent {
-  constructor(private router: Router) {}
+  isUserLoggedIn: boolean = false;
 
-  navigateToLogin() {
-    this.router.navigate(['/auth/login']);
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.checkLoginStatus();
   }
 
-  navigateToRegister() {
-    this.router.navigate(['/auth/register']);
+  async checkLoginStatus() {
+    try {
+      this.isUserLoggedIn = await this.authService.isLogin();
+    } catch (error) {
+      console.error('Error al verificar login:', error);
+      this.isUserLoggedIn = false;
+    }
+  }
+
+  get isLogin(): boolean {
+    return this.isUserLoggedIn;
+  }
+
+  async onLogout() {
+    try {
+      await this.authService.logoutUser();
+      window.location.reload();
+      console.log('Logout exitoso');
+    } catch (error) {
+      console.error('Error al cerrar sesión:', error);
+    }
   }
 }

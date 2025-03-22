@@ -1,20 +1,16 @@
+<div class="layout">
+  <div class="content-wrapper">
+    <!-- Navbar Section -->
     <app-nav></app-nav>
-  <!-- Hero Section -->
-  <section class="hero">
-    <app-home></app-home>
-  </section>
 
-  <!-- Dashboard Cards Section -->
-  <section class="cards-section">
+    <!-- Hero Section -->
+    <section class="hero">
+      <router-outlet></router-outlet>
+    </section>
 
-  </section>
-
-  <!-- Testimonials Section -->
-  <section class="testimonials">
-
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-
-  </footer>
+    <!-- Footer -->
+    <footer class="footer">
+      <app-footer></app-footer>
+    </footer>
+  </div>
+</div>

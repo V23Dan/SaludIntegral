@@ -23,7 +23,15 @@ import {
 export default class RegisterComponent {
   private readonly fb = inject(FormBuilder);
 
-  formGroup = this. fb.nonNullable.group({
+  formGroup = this.fb.nonNullable.group({
+    _id: [
+      '',
+      [
+        Validators.required,
+        Validators.maxLength(30),
+        Validators.pattern('^[0-9]*$'),
+      ],
+    ],
     nombre: [
       '',
       [
@@ -44,22 +52,11 @@ export default class RegisterComponent {
       '',
       [Validators.required, Validators.email, Validators.maxLength(50)],
     ],
-    documento: [
-      '',
-      [
-        Validators.required,
-        Validators.maxLength(30),
-        Validators.pattern('^[0-9]*$'),
-      ],
-    ],
     pass: [
       '',
       [Validators.required, Validators.minLength(8), Validators.maxLength(30)],
     ],
-    tipoUsuario: [
-      '',
-      [Validators.required]
-    ],
+    tipoUsuario: ['', [Validators.required]],
   });
 
   constructor(
@@ -70,10 +67,10 @@ export default class RegisterComponent {
 
   clickRegister(): void {
     const campos = [
+      { control: '_id', mensaje: 'Error en el campo documento' },
       { control: 'nombre', mensaje: 'Error en el campo nombre' },
       { control: 'apellido', mensaje: 'Error en el campo apellido' },
       { control: 'correo', mensaje: 'Error en el campo correo' },
-      { control: 'documento', mensaje: 'Error en el campo documento' },
       { control: 'pass', mensaje: 'Error en el campo contraseña' },
       { control: 'tipoUsuario', mensaje: 'Error en el campo tipo de usuario' },
     ];
@@ -85,7 +82,7 @@ export default class RegisterComponent {
         ].errors
       ) {
         this.alertService.showToast(campo.mensaje, 'error');
-        return; // Sale después de mostrar el primer error encontrado
+        return;
       }
     }
     const password = this.formGroup.value.pass || '';
@@ -95,15 +92,15 @@ export default class RegisterComponent {
     this.registerService.registerUser(formData).then((response) => {
       if (!response) {
         Swal.fire({
-          title: "ERROR",
-          text: "Hubo un error al registrarse, intente de nuevo",
-          icon: "error"
+          title: 'ERROR',
+          text: 'Hubo un error al registrarse, intente de nuevo',
+          icon: 'error',
         });
       } else {
         Swal.fire({
-          title: "REGISTRADO",
-          text: "Sera direccionado al login",
-          icon: "success"
+          title: 'REGISTRADO',
+          text: 'Sera direccionado al login',
+          icon: 'success',
         });
         this.router.navigate(['/auth/login']);
       }

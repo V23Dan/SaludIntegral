@@ -13,8 +13,16 @@
       <a href="#">Contacto</a>
       <a href="#">Acerca de</a>
     </div>
-    <div class="auth-buttons">
-      <button class="btn-login" (click)="navigateToLogin()">Iniciar Sesión</button>
-      <button class="btn-register" (click)="navigateToRegister()">Registrarse</button>
+
+    <div class="auth-buttons" *ngIf="!isLogin">
+      <button class="btn-login" [routerLink]="'/auth/login'" >Iniciar sesión</button>
+      <button class="btn-register" [routerLink]="'/auth/register'">Regístrate</button>
     </div>
+    <div class="auth-buttomns" *ngIf="isLogin">
+    <button class="btn-login" (click)="onLogout()"> Cerrar Sesión</button>
+    <button class="btn-register" (click)="onLogout()"> Perfil</button>
+    </div>
+
   </nav>
+
+

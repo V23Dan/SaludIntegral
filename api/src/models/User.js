@@ -2,8 +2,8 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    idUser: {
-      type: Schema.ObjectId,
+    _id: {
+      type: String,
       required: true,
     },
     nombre: {
@@ -19,20 +19,14 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    documento: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     pass: {
       type: String,
       required: true,
     },
     tipoUsuario: {
       type: String,
-      required: true,
     },
-    roles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Rol' }] 
+    roles: [{ type: Number, ref: 'Rol' }]
   },
   {
     timestamps: true,
@@ -40,5 +34,4 @@ const userSchema = new mongoose.Schema(
 );
 
 const User = mongoose.model("User", userSchema);
-
 export default User;

@@ -1,0 +1,131 @@
+:root {
+    --primary-color: #00c6b8;
+    --secondary-color: #1e3a8a;
+    --bg-color: #f0f9ff;
+    --text-color: #334155;
+    --light-text: #64748b;
+    --dark-text: #1e293b;
+    --shadow: 0 10px 30px rgba(0, 198, 184, 0.1);
+    --card-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.footer {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 50px 20px 20px;
+    box-shadow: var(--shadow);
+    text-align: center;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    margin-bottom: 30px;
+    padding: 0 15px;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    position: relative;
+}
+
+.footer-section h3:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -8px;
+    width: 40px;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.links li {
+    margin-bottom: 10px;
+}
+
+.links a {
+    color: var(--dark-text);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.links a:hover {
+    color: var(--primary-color);
+}
+
+.contact p {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contact i {
+    margin-right: 10px;
+    color: var(--primary-color);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--secondary-color);
+    padding-top: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.social-links {
+    margin-top: 10px;
+}
+
+.social-links a {
+    display: inline-block;
+    margin: 0 8px;
+    color: var(--light-text);
+    transition: color 0.3s;
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-section {
+        text-align: center;
+    }
+}

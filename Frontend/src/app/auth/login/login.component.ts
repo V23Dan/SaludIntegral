@@ -72,7 +72,7 @@ export default class LoginComponent {
         });
 
       } else {
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/dashboard/homeAuth']);
       }
     });
   }

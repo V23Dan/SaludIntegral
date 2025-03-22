@@ -23,7 +23,7 @@
           <label>Correo electrónico</label>
         </div>
         <div class="input-group">
-          <input type="text" formControlName="documento"/>
+          <input type="text" formControlName="_id"/>
           <label>Documento</label>
         </div>
         <div class="input-group">
@@ -36,13 +36,6 @@
             <option value="profesional">Profesional de salud</option>
           </select>
           <label>Tipo de usuario</label>
-        </div>
-        <div class="terms">
-          <input type="checkbox" id="terms" required />
-          <label for="terms"
-            >Acepto los <a href="#">Términos y Condiciones</a> y la
-            <a href="#">Política de Privacidad</a></label
-          >
         </div>
         <button type="submit" (click)="clickRegister()">Registrarme</button>
         <div class="login-link">

@@ -1,12 +1,11 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
 
 const rolSchema = new mongoose.Schema(
   {
-    idRol: {
-      type: Schema.ObjectId,
-      required: true,
+    _id: {
+      type: Number, 
     },
-    nameRol: {
+    name: {
       type: String,
       required: true,
     },
@@ -19,6 +18,14 @@ const rolSchema = new mongoose.Schema(
   }
 );
 
-const Rol = mongoose.model("Rol", rolSchema);
 
+rolSchema.pre("save", async function (next) {
+  if (!this._id) { 
+    const lastRol = await mongoose.model("Rol").findOne().sort({ _id: -1 });
+    this._id = lastRol ? lastRol._id + 1 : 1; 
+  }
+  next();
+});
+
+const Rol = mongoose.model("Rol", rolSchema);
 export default Rol;

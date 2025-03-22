@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import NavComponent from '../components/nav/nav.component';
-import  HomeComponent  from "../pages/home/home.component";
+import FooterComponent from '../components/footer/footer.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, NavComponent, HomeComponent],
+  imports: [CommonModule, NavComponent, FooterComponent, RouterModule],
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export default class DashboardComponent {
-
+  constructor(private router: Router) {}
+  
 }
