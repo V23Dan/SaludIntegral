@@ -33,6 +33,12 @@ export const routes: Routes = [
         canActivate:[authGuard],
         loadComponent: () => import('./pages/homeAuth/homeAuth.component'),
       },
+      {
+        path: 'perfil',
+        title:'PerfilUser',
+        canActivate:[authGuard],
+        loadComponent: () => import('./views/user/perfilUser/perfilUser.component'),
+      },
     ],
   },
   {

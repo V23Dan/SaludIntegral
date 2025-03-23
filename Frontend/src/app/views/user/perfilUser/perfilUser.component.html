@@ -1,1 +1,59 @@
-<h1>Hola Perfil</h1>
+<div class="profile-container">
+  <!-- Mostrar spinner mientras se cargan los datos -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>Cargando información del usuario...</p>
+  </div>
+
+  <!-- Mostrar mensaje de error si ocurre algún problema -->
+  <div *ngIf="error" class="error-container">
+    <h3>Ocurrió un error</h3>
+    <p>{{ errorMessage }}</p>
+    <button (click)="loadUserInfo()" class="retry-btn">Intentar nuevamente</button>
+  </div>
+
+  <!-- Mostrar la información del usuario cuando esté disponible -->
+  <div *ngIf="!loading && !error && currentUser" class="user-info-container">
+    <h2>Perfil de Usuario</h2>
+
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="avatar">
+          {{ currentUser.nombre.charAt(0) }}{{ currentUser.apellido.charAt(0) }}
+        </div>
+        <h3>{{ currentUser.nombre }} {{ currentUser.apellido }}</h3>
+      </div>
+
+      <div class="profile-details">
+        <div class="detail-item">
+          <span class="label">ID:</span>
+          <span class="value">{{ currentUser._id }}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="label">Email:</span>
+          <span class="value">{{ currentUser.correo }}</span>
+        </div>
+
+        <div *ngIf="currentUser.tipoUsuario" class="detail-item">
+          <span class="label">Tipo de Usuario:</span>
+          <span class="value">{{ currentUser.tipoUsuario }}</span>
+        </div>
+
+        <div *ngIf="currentUser.roles && currentUser.roles.length > 0" class="detail-item">
+          <span class="label">Roles:</span>
+          <div class="roles-container">
+            <span *ngFor="let role of currentUser.roles" class="role-badge">
+              {{ role.name }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <button class="btn-edit">Editar Perfil</button>
+        
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,6 +6,11 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+
+  info() {
+    this.router.navigate(['/dashboard/perfil'])
+  }
+
   private readonly registerURL = 'http://localhost:5000/auth/register';
   constructor(private router: Router) {}
 

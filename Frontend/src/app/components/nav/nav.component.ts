@@ -14,6 +14,10 @@ export default class NavComponent {
 
   constructor(private authService: AuthService) {}
 
+Perfil(){
+this.authService.info()
+}
+
   ngOnInit() {
     this.checkLoginStatus();
   }
