@@ -8,14 +8,10 @@ import { map, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:5000/user'; // Ajusta esta URL según tu configuración
+  private apiUrl = 'http://localhost:5000/user';
 
   constructor() { }
 
-  /**
-   * Obtiene la información del usuario autenticado
-   * @returns Observable con los datos del usuario
-   */
   getUserInfo(): Observable<User> {
     return from(axios.get(`${this.apiUrl}/getInfoUser`, {
       withCredentials: true
@@ -33,11 +29,6 @@ export class UserService {
     );
   }
 
-  /**
-   * Verifica si hay un usuario autenticado y devuelve su información
-   * Si no hay usuario autenticado, devuelve null
-   * @returns Observable<User | null>
-   */
   getCurrentUser(): Observable<User | null> {
     return from(axios.get(`${this.apiUrl}/getInfoUser`, {
       withCredentials: true
@@ -55,13 +46,8 @@ export class UserService {
     );
   }
 
-  /**
-   * Actualiza la información del usuario
-   * @param userData Datos del usuario a actualizar
-   * @returns Observable con la respuesta
-   */
   updateUserInfo(userData: Partial<User>): Observable<any> {
-    return from(axios.put(`${this.apiUrl}/getInfoUser`, userData, {
+    return from(axios.put(`${this.apiUrl}/updateUser`, userData, {
       withCredentials: true
     })).pipe(
       map(response => response.data),

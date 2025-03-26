@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -10,13 +10,22 @@ import { CommonModule } from '@angular/common';
   styleUrl: './nav.component.css',
 })
 export default class NavComponent {
+  isUserMenuOpen: boolean = false;
   isUserLoggedIn: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-Perfil(){
-this.authService.info()
-}
+  toggleUserMenu() {
+    this.isUserMenuOpen = !this.isUserMenuOpen;
+  }
+
+  Perfil() {
+    this.authService.info();
+    this.isUserMenuOpen = false;
+  }
 
   ngOnInit() {
     this.checkLoginStatus();
@@ -38,8 +47,10 @@ this.authService.info()
   async onLogout() {
     try {
       await this.authService.logoutUser();
-      window.location.reload();
-      console.log('Logout exitoso');
+      // Navega a la página de inicio y fuerza una actualización del estado
+      await this.router.navigateByUrl('/');
+      this.checkLoginStatus();
+      this.isUserMenuOpen = false;
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
     }

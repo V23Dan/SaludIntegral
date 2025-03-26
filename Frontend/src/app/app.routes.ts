@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
+import { Title } from '@angular/platform-browser';
 
 export const routes: Routes = [
   {
@@ -30,14 +31,23 @@ export const routes: Routes = [
       {
         path: 'homeAuth',
         title: 'HomeAuth',
-        canActivate:[authGuard],
+        canActivate: [authGuard],
         loadComponent: () => import('./pages/homeAuth/homeAuth.component'),
       },
       {
         path: 'perfil',
-        title:'PerfilUser',
-        canActivate:[authGuard],
-        loadComponent: () => import('./views/user/perfilUser/perfilUser.component'),
+        title: 'PerfilUser',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./views/user/perfilUser/perfilUser.component'),
+        children: [
+          {
+            path: 'editProfile',
+            title: 'EditProfile',
+            loadComponent: () =>
+              import('./views/user/perfilUser/editUser/editUser.component'),
+          },
+        ],
       },
     ],
   },
