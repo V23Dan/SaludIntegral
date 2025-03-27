@@ -1,5 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { UserService } from '../../../../services/user.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -9,7 +14,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './editUser.component.html',
-  styleUrl: './editUser.component.css'
+  styleUrl: './editUser.component.css',
 })
 export default class EditarPerfilComponent {
   @Output() cerrar = new EventEmitter<void>();
@@ -24,21 +29,32 @@ export default class EditarPerfilComponent {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private router: Router,
+    private router: Router
   ) {
     this.perfilForm = this.fb.group({
-      _id: [''],
-      nombre: ['', [Validators.required, Validators.minLength(2)]],
-      apellido: ['', [Validators.required, Validators.minLength(2)]],
-      correo: ['', [Validators.required, Validators.email]],
-      tipoUsuario: [''],
-      pass: ['']
+      nombre: ['', [Validators.minLength(2)]],
+      apellido: ['', [Validators.minLength(2)]],
+      correo: ['', [Validators.email]],
     });
   }
 
   onSubmit(): void {
+
+    // Validar si al menos un campo tiene contenido
+
+    const formValues = this.perfilForm.value;
+
+    const isAnyFieldFilled = Object.values(formValues).some(
+      (value) => value && value.toString().length > 0
+    );
+
+    if (!isAnyFieldFilled) {
+      this.errorMessage = 'Debes completar al menos un campo para actualizar.';
+      return;
+    }
+
     if (this.perfilForm.invalid) {
-      Object.keys(this.perfilForm.controls).forEach(field => {
+      Object.keys(this.perfilForm.controls).forEach((field) => {
         const control = this.perfilForm.get(field);
         control?.markAsTouched({ onlySelf: true });
       });
@@ -58,14 +74,15 @@ export default class EditarPerfilComponent {
       },
       error: (error) => {
         this.loading = false;
-        this.errorMessage = error.response?.data?.message || 'Error al actualizar el perfil';
-      }
+        this.errorMessage =
+          error.response?.data?.message || 'Error al actualizar el perfil';
+      },
     });
   }
 
   onCerrar(): void {
     this.cerrar.emit();
-    this.router.navigate(["dashboard/perfil"]);
+    this.router.navigate(['dashboard/perfil']);
   }
 
   esInvalido(campo: string): boolean {

@@ -3,6 +3,7 @@ import { UserService } from '../../../services/user.service';
 import { User } from '../../../interfaces/user-interface';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -26,7 +27,11 @@ export default class ProfileComponent implements OnInit {
   error = false;
   errorMessage = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loadUserInfo();
@@ -44,7 +49,6 @@ export default class ProfileComponent implements OnInit {
   }
 
   onPerfilActualizado(datosActualizados: any) {
-    // Manejar la actualización del perfil
     console.log('Perfil actualizado:', datosActualizados);
   }
 
@@ -66,5 +70,28 @@ export default class ProfileComponent implements OnInit {
         console.error('Error al cargar información del usuario:', err);
       },
     });
+  }
+
+  async handleDeleteUser() {
+    try {
+      const confirmed = window.confirm(
+        '¿Estás seguro de que quieres eliminar tu cuenta?'
+      );
+
+      if (confirmed) {
+        const result = await this.userService.deleteUser();
+        alert(result.message);
+        await this.authService.logoutUser();
+        await this.router.navigateByUrl('/');
+        window.location.reload();
+      }
+    } catch (error: unknown) {
+      // Manejo seguro del error
+      if (error instanceof Error) {
+        alert(error.message);
+      } else {
+        alert('Ocurrió un error desconocido');
+      }
+    }
   }
 }

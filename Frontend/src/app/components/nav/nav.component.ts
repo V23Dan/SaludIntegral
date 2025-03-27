@@ -47,7 +47,6 @@ export default class NavComponent {
   async onLogout() {
     try {
       await this.authService.logoutUser();
-      // Navega a la página de inicio y fuerza una actualización del estado
       await this.router.navigateByUrl('/');
       this.checkLoginStatus();
       this.isUserMenuOpen = false;

@@ -118,7 +118,7 @@ export const deleteUser = async (req, res) => {
       });
     }
 
-    const deletedUser = await User.findByIdAndDelete(id);
+    const deletedUser = await User.findByIdAndDelete(token.id);
     if (!deletedUser) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
