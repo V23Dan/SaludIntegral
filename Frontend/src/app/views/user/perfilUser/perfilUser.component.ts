@@ -4,6 +4,7 @@ import { User } from '../../../interfaces/user-interface';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-profile',
@@ -74,16 +75,28 @@ export default class ProfileComponent implements OnInit {
 
   async handleDeleteUser() {
     try {
-      const confirmed = window.confirm(
-        '¿Estás seguro de que quieres eliminar tu cuenta?'
-      );
+      const result = await Swal.fire({
+        title: 'Estas seguro?',
+        text: "No podras revertir esto!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, eliminar cuenta!',
+      });
 
-      if (confirmed) {
-        const result = await this.userService.deleteUser();
-        alert(result.message);
+      if (result.isConfirmed) {
+        const deleteResult = await this.userService.deleteUser();
+        alert(deleteResult.message);
         await this.authService.logoutUser();
         await this.router.navigateByUrl('/');
         window.location.reload();
+
+        await Swal.fire({
+          title: 'Eliminado!',
+          text: 'Su cuenta fue eliminada.',
+          icon: 'success',
+        });
       }
     } catch (error: unknown) {
       // Manejo seguro del error
