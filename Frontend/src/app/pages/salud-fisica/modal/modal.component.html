@@ -1,0 +1,93 @@
+<div class="modal">
+  <div class="modal-content">
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Cerrar"
+      (click)="onCerrar()"
+    >
+      ✕
+    </button>
+
+    <h2>Editar Perfil</h2>
+
+    <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()" class="profile-form">
+      <div class="form-group"></div>
+
+      <div class="form-group">
+        <label for="nombre">Peso (kg)</label>
+        <input
+          type="number"
+          id="peso"
+          formControlName="peso"
+          class="form-control"
+          [class.is-invalid]="esInvalido('peso')"
+        />
+        @if (esInvalido('peso')) {
+        <div class="error-message">
+          El peso es obligatorio y minimo de 2 digitos
+        </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="altura">Altura (m)</label>
+        <input
+          type="number"
+          id="altura"
+          formControlName="altura"
+          class="form-control"
+          [class.is-invalid]="esInvalido('altura')"
+        />
+        @if (esInvalido('altura')) {
+        <div class="error-message">Altura es obligatorio</div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="correo">Edad (años)</label>
+        <input
+          type="number"
+          id="edad"
+          formControlName="edad"
+          class="form-control"
+          [class.is-invalid]="esInvalido('edad')"
+        />
+        @if (esInvalido('edad')) {
+        <div class="error-message">Edad es obligatoria</div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="correo">Sexo (Biologico)</label>
+        <select name="sexo" id="sexo" formControlName="sexo" class="form-control" [class.is-invalid]="esInvalido('sexo')">
+          <option value="Masculino">Masculino</option>
+          <option value="Femenino">Femenino</option>
+        </select>
+        @if (esInvalido('sexo')) {
+        <div class="error-message">Edad es obligatoria</div>
+        }
+      </div>
+
+      @if (errorMessage) {
+      <div class="error-alert">
+        {{ errorMessage }}
+      </div>
+      } @if (successMessage) {
+      <div class="success-alert">
+        {{ successMessage }}
+      </div>
+      }
+
+      <div class="modal-actions">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="perfilForm.invalid || loading"
+        >
+          @if (loading) { Guardando... } @else { Guardar Cambios }
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

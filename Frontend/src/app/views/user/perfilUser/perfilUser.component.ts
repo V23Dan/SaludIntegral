@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
-import { User } from '../../../interfaces/user-interface';
+import { User, physicalData } from '../../../interfaces/user-interface';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { PhysicalDataService } from '../../../services/physicalData.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -24,6 +25,7 @@ import Swal from 'sweetalert2';
 })
 export default class ProfileComponent implements OnInit {
   currentUser: User | null = null;
+  physicalDataUser: physicalData | null = null;
   loading = true;
   error = false;
   errorMessage = '';
@@ -31,6 +33,7 @@ export default class ProfileComponent implements OnInit {
   constructor(
     private userService: UserService,
     private router: Router,
+    private physicalData: PhysicalDataService,
     private authService: AuthService
   ) {}
 
@@ -71,13 +74,28 @@ export default class ProfileComponent implements OnInit {
         console.error('Error al cargar información del usuario:', err);
       },
     });
+    // Ya se arreglo
+    this.physicalData.getPhysicalData().subscribe({
+      next: (physicalDataUser) => {
+        this.physicalDataUser = physicalDataUser;
+        this.loading = false;
+      },
+      error: (err) => {
+        this.error = true;
+        this.errorMessage =
+          err.response?.data?.message ||
+          'Error al cargar los datos del usuario';
+        this.loading = false;
+        console.error('Error al cargar información del usuario:', err);
+      },
+    });
   }
 
   async handleDeleteUser() {
     try {
       const result = await Swal.fire({
         title: 'Estas seguro?',
-        text: "No podras revertir esto!",
+        text: 'No podras revertir esto!',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

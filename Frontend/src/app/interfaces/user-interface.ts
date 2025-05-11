@@ -12,3 +12,10 @@ export interface Role {
   name: string;
   description?: string;
 }
+
+export interface physicalData {
+  sexo: string;
+  edad: number;
+  altura: number;
+  peso: number;
+}

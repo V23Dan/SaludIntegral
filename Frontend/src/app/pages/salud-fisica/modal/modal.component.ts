@@ -5,18 +5,17 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { UserService } from '../../../../services/user.service';
-import { CommonModule } from '@angular/common';
+import { PhysicalDataService } from '../../../services/physicalData.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-editar-perfil',
+  selector: 'app-modal',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
-  templateUrl: './editUser.component.html',
-  styleUrl: './editUser.component.css',
+  imports: [ReactiveFormsModule],
+  templateUrl: './modal.component.html',
+  styleUrl: './modal.component.css',
 })
-export default class EditarPerfilComponent {
+export default class ModalComponent {
   @Output() cerrar = new EventEmitter<void>();
   @Input() usuarioId: string | null = null;
   @Output() perfilActualizado = new EventEmitter<any>();
@@ -28,18 +27,44 @@ export default class EditarPerfilComponent {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
+    private physicalData: PhysicalDataService,
     private router: Router
   ) {
     this.perfilForm = this.fb.group({
-      nombre: ['', [Validators.minLength(2)]],
-      apellido: ['', [Validators.minLength(2)]],
-      correo: ['', [Validators.email]],
+      sexo: ['', [Validators.required]],
+      edad: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^(?:1[01][0-9]|120|[1-9][0-9]?)$'),
+          Validators.min(18),
+          Validators.max(90),
+        ],
+      ],
+      altura: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(
+            '^(0\\.[5-9]|1(\\.[0-9]{1,2})?|2(\\.[0-4][0-9]?|\\.5)?)$'
+          ),
+          Validators.min(0.6),
+          Validators.max(2.5),
+        ],
+      ],
+      peso: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('^([1-9][0-9]{0,2})(\\.[0-9]{1,2})?$'),
+          Validators.min(30),
+          Validators.max(300),
+        ],
+      ],
     });
   }
 
-  onSubmit(): void {
-
+  async onSubmit(): Promise<void> {
     const formValues = this.perfilForm.value;
 
     const isAnyFieldFilled = Object.values(formValues).some(
@@ -63,28 +88,25 @@ export default class EditarPerfilComponent {
     this.errorMessage = '';
     this.successMessage = '';
 
-    const userData = this.perfilForm.value;
-
-    this.userService.updateUserInfo(userData).subscribe({
-      next: (response) => {
-        this.loading = false;
-        this.successMessage = 'Perfil actualizado exitosamente';
-      },
-      error: (error) => {
-        this.loading = false;
-        this.errorMessage =
-          error.response?.data?.message || 'Error al actualizar el perfil';
-      },
-    });
+    try {
+      const response = await this.physicalData.registerPhysicalData(formValues);
+      this.successMessage = 'Datos fisicos guardados exitosamente';
+      this.perfilActualizado.emit(response);
+    } catch (error: any) {
+      this.errorMessage = error?.message || 'Error al cargar datos';
+    } finally {
+      this.loading = false;
+    }
   }
 
   onCerrar(): void {
     this.cerrar.emit();
-    this.router.navigate(['dashboard/perfil']);
+    this.router.navigate(['dashboard/SaludFisica']);
   }
 
   esInvalido(campo: string): boolean {
     const control = this.perfilForm.get(campo);
     return !!control && control.invalid && (control.dirty || control.touched);
   }
+
 }

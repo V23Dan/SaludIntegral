@@ -8,11 +8,19 @@
     <span>Salud General</span>
   </div>
   <div class="nav-links">
-    <a href="#">Inicio</a>
-    <a href="#">Servicios</a>
-    <a href="#">Contacto</a>
-    <a href="#">Acerca de</a>
+  <a [routerLink]="'homeAuth'">Inicio</a>
+  <div class="nav-item dropdown">
+    <a href="#" class="dropdown-toggle">Servicios</a>
+    <div class="dropdown-menu">
+      <a [routerLink]="'rutinas'">Rutinas</a>
+      <a href="#">Calculadora de IMC</a>
+      <a href="#">Nutrición</a>
+    </div>
   </div>
+  <a href="#">Contacto</a>
+  <a href="#">Acerca de</a>
+</div>
+
 
   <div class="user-menu" *ngIf="!isLogin">
     <button class="btn-login" [routerLink]="'/auth/login'" >Iniciar sesión</button>

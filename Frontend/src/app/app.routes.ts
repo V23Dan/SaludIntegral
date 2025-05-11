@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
-import { Title } from '@angular/platform-browser';
 
 export const routes: Routes = [
   {
@@ -35,6 +34,20 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/homeAuth/homeAuth.component'),
       },
       {
+        path: 'SaludFisica',
+        title: 'SaludFisica',
+        // canActivate: [authGuard],
+        loadComponent: () =>
+          import('./pages/salud-fisica/salud-fisica.component'),
+      },
+      {
+        path: 'SaludMental',
+        title: 'SaludMental',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./pages/salud-mental/salud-mental.component'),
+      },
+      {
         path: 'perfil',
         title: 'PerfilUser',
         canActivate: [authGuard],
@@ -48,6 +61,11 @@ export const routes: Routes = [
               import('./views/user/perfilUser/editUser/editUser.component'),
           },
         ],
+      },
+      {
+        path: 'rutinas',
+        title: 'rutinas',
+        loadComponent: () => import('./pages/routines/routines.component'),
       },
     ],
   },

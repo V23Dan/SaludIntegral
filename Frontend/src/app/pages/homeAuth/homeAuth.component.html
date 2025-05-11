@@ -1,1 +1,31 @@
-<h1>Usuario Autenticado</h1>
+<div class="dashboard-container">
+  <header class="dashboard-header">
+    <h1>Bienvenido a tu panel de salud, {{ currentUser?.nombre }} {{ currentUser?.apellido }}</h1>
+    <p>Tu bienestar es nuestra prioridad</p>
+  </header>
+</div>
+
+<!-- Cards Salud Mental y Fisica -->
+  <div class="health-cards-container">
+    <div class="health-card">
+      <h3>Salud Mental</h3>
+      <p>
+        Cuidar tu salud mental es fundamental para mantener el equilibrio
+        emocional y bienestar diario.
+      </p>
+      <button class="action-btn" [routerLink]="'/dashboard/SaludMental'">Ver más</button>
+    </div>
+    <div class="health-card">
+      <h3>Salud Física</h3>
+      <p>
+        La actividad física regular mejora tu salud cardiovascular, muscular y
+        tu energía diaria.
+      </p>
+      <button class="action-btn" [routerLink]="'/dashboard/SaludFisica'">
+        Ver más
+      </button>
+    </div>
+  </div>
+
+
+

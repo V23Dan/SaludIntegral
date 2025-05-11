@@ -14,7 +14,7 @@ export const verifyToken = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, secretKey);
     req.user = decoded;
-    next(); // Continúa al siguiente middleware o controlador
+    next(); 
   } catch (error) {
     return res
       .status(401)

@@ -26,7 +26,11 @@ const userSchema = new mongoose.Schema(
     tipoUsuario: {
       type: String,
     },
-    roles: [{ type: Number, ref: 'Rol' }]
+    roles: [{ type: Number, ref: "Rol" }],
+    datosFisicos: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "PhysicalData",
+    },
   },
   {
     timestamps: true,

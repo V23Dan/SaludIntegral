@@ -1,0 +1,135 @@
+<div class="dashboard-container">
+  <h1>Panel Salud Fisica</h1>
+  <br />
+  <section class="stats-overview" *ngIf="!hasPhysicalData() && !loading">
+    <div class="stat-card">
+      <div class="stat-icon">🤔</div>
+      <div class="stat-info-QA">
+        <h3>Ayudanos a ayudarte</h3>
+        <p>Responde la siguiente encuesta</p>
+        <br />
+        <button class="action-btn" (click)="abrirModalEdicion()">
+          Responder.
+        </button>
+      </div>
+    </div>
+  </section>
+
+  @if (mostrarModalEdicion) {
+  <app-modal (cerrar)="cerrarModalEdicion()"></app-modal>
+  }
+
+  <section class="stats-overview">
+    <div class="stat-card">
+      <div class="stat-icon">🏃</div>
+      <div class="stat-info">
+        <h3>Actividad Física</h3>
+        <p>3 de 5 metas completadas esta semana</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">🥗</div>
+      <div class="stat-info">
+        <h3>Nutrición</h3>
+        <p>85% de adherencia a tu plan</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon">💧</div>
+      <div class="stat-info">
+        <h3>Hidratación</h3>
+        <p>1.5 L de 2 L diarios</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="content-grid">
+    <section class="main-content">
+      <div class="category-section">
+        <h2>Plan de Ejercicios</h2>
+        <div class="content-cards">
+          <div class="content-card">
+            <img alt="Ejercicios cardiovasculares" />
+            <h3>Ejercicios Cardiovasculares</h3>
+            <p>Mejora tu resistencia con nuestros planes personalizados</p>
+            <button class="action-btn">Ver plan</button>
+          </div>
+          <div class="content-card">
+            <img alt="Entrenamiento de fuerza" />
+            <h3>Entrenamiento de Fuerza</h3>
+            <p>Aumenta tu masa muscular y tonifica tu cuerpo</p>
+            <button class="action-btn">Ver rutinas</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="category-section">
+        <h2>Nutrición Saludable</h2>
+        <div class="content-cards">
+          <div class="content-card">
+            <img alt="Recetas saludables" />
+            <h3>Recetas Balanceadas</h3>
+            <p>Descubre platos deliciosos y nutritivos para tu día a día</p>
+            <button class="action-btn">Ver recetas</button>
+          </div>
+          <div class="content-card">
+            <img alt="Plan alimenticio" />
+            <h3>Plan Alimenticio</h3>
+            <p>Menús semanales adaptados a tus necesidades</p>
+            <button class="action-btn">Ver plan</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="sidebar">
+      <div class="health-notes">
+        <h2>Recomendaciones</h2>
+
+        <div class="note">
+          <div class="note-header">
+            <span class="note-icon">💡</span>
+            <h3>Consejo del día</h3>
+          </div>
+          <p>
+            Incluye al menos 30 minutos de actividad física moderada en tu
+            rutina diaria.
+          </p>
+        </div>
+
+        <div class="note">
+          <div class="note-header">
+            <span class="note-icon">🍎</span>
+            <h3>Nutrición</h3>
+          </div>
+          <p>
+            Consume al menos 5 porciones de frutas y verduras diariamente para
+            una alimentación equilibrada.
+          </p>
+        </div>
+
+        <div class="note">
+          <div class="note-header">
+            <span class="note-icon">😴</span>
+            <h3>Descanso</h3>
+          </div>
+          <p>
+            Procura dormir entre 7-8 horas para facilitar la recuperación
+            muscular y mejorar tu bienestar general.
+          </p>
+        </div>
+
+        <div class="note">
+          <div class="note-header">
+            <span class="note-icon">🧘</span>
+            <h3>Salud mental</h3>
+          </div>
+          <p>
+            Dedica 10 minutos diarios a ejercicios de respiración para reducir
+            el estrés.
+          </p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>

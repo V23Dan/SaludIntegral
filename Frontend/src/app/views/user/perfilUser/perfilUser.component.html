@@ -36,6 +36,26 @@
           <span class="value">{{ currentUser.correo }}</span>
         </div>
 
+        <div class="detail-item">
+          <span class="label">Altura(m):</span>
+          <span class="value">{{ physicalDataUser?.altura }}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="label">Edad:</span>
+          <span class="value">{{ physicalDataUser?.edad }}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="label">Peso (kg):</span>
+          <span class="value">{{ physicalDataUser?.peso }}</span>
+        </div>
+
+        <div class="detail-item">
+          <span class="label">Sexo:</span>
+          <span class="value">{{ physicalDataUser?.sexo }}</span>
+        </div>
+
         <div *ngIf="currentUser.tipoUsuario" class="detail-item">
           <span class="label">Tipo de Usuario:</span>
           <span class="value">{{ currentUser.tipoUsuario }}</span>
