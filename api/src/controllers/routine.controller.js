@@ -82,7 +82,7 @@ export const getSortedRutinas = async (req, res) => {
   try {
     const result = await Routine.aggregate([
       { $match: { usuario: req.user.id } },
-      { $sort: { duracion: -1 } },
+      { $sort: { duracion: 1 } },
     ]);
     res.json(result);
   } catch (error) {

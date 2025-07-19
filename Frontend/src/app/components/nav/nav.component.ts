@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 export default class NavComponent {
   isUserMenuOpen: boolean = false;
   isUserLoggedIn: boolean = false;
+  isMenuOpen: boolean = false; // NUEVO: menú hamburguesa
 
   constructor(
     private authService: AuthService,
@@ -20,6 +21,14 @@ export default class NavComponent {
 
   toggleUserMenu() {
     this.isUserMenuOpen = !this.isUserMenuOpen;
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 
   Perfil() {

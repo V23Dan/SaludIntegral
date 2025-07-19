@@ -1,5 +1,5 @@
-import PhysicalData from "../models/physicalData.js";
 import User from "../models/User.js";
+import PhysicalData from "../models/physicalData.js";
 
 export const registerPhysicalData = async (req, res) => {
   try {

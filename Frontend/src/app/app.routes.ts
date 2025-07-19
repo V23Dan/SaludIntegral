@@ -36,7 +36,7 @@ export const routes: Routes = [
       {
         path: 'SaludFisica',
         title: 'SaludFisica',
-        // canActivate: [authGuard],
+        canActivate: [authGuard],
         loadComponent: () =>
           import('./pages/salud-fisica/salud-fisica.component'),
       },
@@ -65,7 +65,15 @@ export const routes: Routes = [
       {
         path: 'rutinas',
         title: 'rutinas',
+        canActivate: [authGuard],
         loadComponent: () => import('./pages/routines/routines.component'),
+      },
+      {
+        path: 'reportes',
+        title: 'reportes',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./pages/body-report/body-report.component'),
       },
     ],
   },

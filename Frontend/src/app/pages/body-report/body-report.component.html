@@ -1,0 +1,159 @@
+<!-- calculadoras.component.html -->
+<div class="calculadoras-container">
+  <!-- Header -->
+  <div class="header">
+    <h1>Calculadoras de Salud</h1>
+    <p>Calcula tu IMC, porcentaje de grasa corporal y genera reportes completos</p>
+  </div>
+
+  <!-- Mensaje de estado -->
+  <div *ngIf="mensaje" [class]="'mensaje mensaje-' + tipoMensaje">
+    <i [class]="tipoMensaje === 'success' ? 'icon-check' : tipoMensaje === 'error' ? 'icon-error' : 'icon-info'"></i>
+    {{ mensaje }}
+  </div>
+
+  <!-- Grid principal -->
+  <div class="grid-container">
+
+    <!-- Calculadora IMC -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Calculadora de IMC</h3>
+        <p>Índice de Masa Corporal</p>
+      </div>
+      <div class="card-body">
+        <button
+          class="btn btn-primary"
+          (click)="calcularIMC()"
+          [disabled]="loadingIMC">
+          <span *ngIf="!loadingIMC">Calcular IMC</span>
+          <span *ngIf="loadingIMC" class="loading">Calculando...</span>
+        </button>
+
+        <div *ngIf="imcData" class="resultado">
+          <div class="valor-principal">{{ imcData.imc }}</div>
+          <div [class]="'clasificacion ' + obtenerClaseIMC(imcData.clasificacionIMC)">
+            {{ imcData.clasificacionIMC }}
+          </div>
+          <div class="datos-base">
+            <span>Indice de Masa Corporal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calculadora Grasa Corporal -->
+    <div class="card">
+      <div class="card-header">
+        <h3>Grasa Corporal</h3>
+        <p>Porcentaje de grasa corporal</p>
+      </div>
+      <div class="card-body">
+        <button
+          class="btn btn-primary"
+          (click)="calcularGrasaCorporal()"
+          [disabled]="loadingGrasa">
+          <span *ngIf="!loadingGrasa">Calcular Grasa</span>
+          <span *ngIf="loadingGrasa" class="loading">Calculando...</span>
+        </button>
+
+        <div *ngIf="grasaData" class="resultado">
+          <div class="valor-principal">{{ grasaData.porcentajeGrasaCorporal }}%</div>
+          <div [class]="'clasificacion ' + obtenerClaseGrasa(grasaData.clasificacionGrasa)">
+            {{ grasaData.clasificacionGrasa }}
+          </div>
+          <div class="metodo">{{ grasaData.metodoDeCalculo }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generar Reporte -->
+    <div class="card card-full">
+      <div class="card-header">
+        <h3>Generar Reporte Completo</h3>
+        <p>Crea un reporte con todos los cálculos y guárdalo</p>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="observaciones">Observaciones (opcional):</label>
+          <textarea
+            id="observaciones"
+            [(ngModel)]="observaciones"
+            placeholder="Agrega cualquier observación sobre tu estado físico actual..."
+            rows="3">
+          </textarea>
+        </div>
+
+        <button
+          class="btn btn-primary btn-large"
+          (click)="generarReporteCompleto()"
+          [disabled]="loadingReporte">
+          <span *ngIf="!loadingReporte">Generar y Guardar Reporte</span>
+          <span *ngIf="loadingReporte" class="loading">Generando reporte...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Último reporte -->
+  <div *ngIf="ultimoReporte" class="ultimo-reporte">
+    <h3>Último Reporte</h3>
+    <div class="reporte-card">
+      <div class="reporte-header">
+        <span class="fecha">{{ formatearFecha(ultimoReporte.createdAt) }}</span>
+      </div>
+      <div class="reporte-datos">
+        <div class="dato">
+          <span class="label">IMC:</span>
+          <span class="value">{{ ultimoReporte.imc }} ({{ ultimoReporte.clasificacionIMC }})</span>
+        </div>
+        <div class="dato">
+          <span class="label">Grasa Corporal:</span>
+          <span class="value">{{ ultimoReporte.porcentajeGrasaCorporal }}% ({{ ultimoReporte.clasificacionGrasa }})</span>
+        </div>
+        <div class="dato">
+          <span class="label">Somatotipo:</span>
+          <span class="value">{{ ultimoReporte.somatotipo }}</span>
+        </div>
+      </div>
+      <div *ngIf="ultimoReporte.observaciones" class="observaciones">
+        <strong>Observaciones:</strong> {{ ultimoReporte.observaciones }}
+      </div>
+    </div>
+  </div>
+
+  <!-- Historial de reportes -->
+  <div class="historial-section">
+    <div class="historial-header">
+      <h3>Historial de Reportes</h3>
+      <button
+        class="btn btn-secondary"
+        (click)="cargarReportes()"
+        [disabled]="loadingReportes">
+        <span *ngIf="!loadingReportes">{{ mostrarReportes ? 'Actualizar' : 'Ver Historial' }}</span>
+        <span *ngIf="loadingReportes" class="loading">Cargando...</span>
+      </button>
+    </div>
+
+    <div *ngIf="mostrarReportes && reportes.length > 0" class="reportes-grid">
+      <div *ngFor="let reporte of reportes" class="reporte-item">
+        <div class="reporte-fecha">{{ formatearFecha(reporte.createdAt) }}</div>
+        <div class="reporte-resumen">
+          <span>IMC: {{ reporte.imc }}</span>
+          <span>Grasa: {{ reporte.porcentajeGrasaCorporal }}%</span>
+          <span>{{ reporte.somatotipo }}</span>
+        </div>
+        <button
+          class="btn-eliminar"
+          (click)="eliminarReporte(reporte._id)"
+          title="Eliminar reporte">
+          ×
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="mostrarReportes && reportes.length === 0" class="no-reportes">
+      <p>No tienes reportes guardados aún.</p>
+    </div>
+  </div>
+</div>

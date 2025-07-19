@@ -9,7 +9,7 @@
       ✕
     </button>
 
-    <h2>Editar Perfil</h2>
+    <h2>Agregar datos fisicos</h2>
 
     <form [formGroup]="perfilForm" (ngSubmit)="onSubmit()" class="profile-form">
       <div class="form-group"></div>
@@ -85,7 +85,7 @@
           class="btn btn-primary"
           [disabled]="perfilForm.invalid || loading"
         >
-          @if (loading) { Guardando... } @else { Guardar Cambios }
+          @if (loading) { Guardando... } @else { Guardar }
         </button>
       </div>
     </form>
